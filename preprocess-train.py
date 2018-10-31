@@ -6,6 +6,7 @@
 #
 
 # Importing libraries
+import dill
 import pandas as pd
 import numpy as np
 # scikit learn
@@ -54,3 +55,5 @@ svm_classifier = SVC(kernel='linear')
 svm_classifier.fit(X_train, y_train)  
 y_pred = svm_classifier.predict(X_test)  
 
+with open('model.pk', 'wb') as f:
+    dill.dump(svm_classifier, f)
