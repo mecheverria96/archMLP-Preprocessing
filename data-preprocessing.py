@@ -7,7 +7,9 @@
 
 # Importing libraries
 import pandas as pd 
+import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 
 # === Preprocessing and Data Cleaning Methods ===
 def read_file(source):
@@ -131,7 +133,49 @@ def add_features(df, new_features):
 
     return copy_df
 
-def split_train_test(X, Y, test_percentage):
+def one_hot_encoding(X):
+    """
+    Perfom One Hot Encoding for categorical variables
+
+    Parameters
+    - X: (pandas dataframe) dataframe with features
+    
+    Return 
+    - res: (pandas dataframe) dataframe with one hot enconding
+    """
+    X_cat = pd.get_dummies(X.select_dtypes(include=['object']))
+    X_num = X.select_dtypes(exclude=['object'])
+    res = pd.concat([X_num, X_cat], axis=1, sort=False)
+    
+    return res
+
+def impute_values(X_train, X_test, col_names, missing_val, impute_strategy, impute_val=None):
+    """
+    Impute missing values with either a constant value or 
+    statistics using the scikit learn SimpleImputer
+
+    Parameters
+    - X_train: (pandas dataframe) dataframe with 1 - test_percentage of entries
+    - X_test: (pandas dataframe) dataframe with test_percentage of entries
+    - missing_val: (number, string, np.nan (default) or None) 
+                          placeholder for the missing values
+    - impute_strategy: ()
+    
+    Return 
+    - res: (pandas dataframe) dataframe with one hot enconding
+    """
+    X_train_res = X_train.copy()
+    X_test_res = X_test.copy()
+
+    for col in col_names:
+        imp = SimpleImputer(missing_values=missing_val, strategy=impute_strategy, fill_value=impute_val)
+        imp.fit(X_train[[col]])
+        X_train_res[col] = imp.transform(X_train[[col]])
+        X_test_res[col] = imp.transform(X_test[[col]])
+
+    return X_train_res, X_test_res
+
+def split_train_test(X, Y, test_percentage=0.3):
     """
     Split X and Y into train and test sets
 
@@ -151,5 +195,3 @@ def split_train_test(X, Y, test_percentage):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = test_percentage)
 
     return X_train, X_test, Y_train, Y_test
-
-
