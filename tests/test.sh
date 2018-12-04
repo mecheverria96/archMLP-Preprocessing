@@ -1,1 +1,1 @@
-echo "Running tests :)""
+echo "Running tests :)"
