@@ -1,5 +1,6 @@
 # 
 # ArcMLP - Preprocessing Component
+# Mariana Echeverria
 #
 # Data cleaning and preprocessing methods to get data ready for
 # training ML model.
