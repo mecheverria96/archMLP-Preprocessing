@@ -155,14 +155,20 @@ def impute_values(X_train, X_test, col_names, missing_val, impute_strategy, impu
     statistics using the scikit learn SimpleImputer
 
     Parameters
-    - X_train: (pandas dataframe) dataframe with 1 - test_percentage of entries
-    - X_test: (pandas dataframe) dataframe with test_percentage of entries
-    - missing_val: (number, string, np.nan (default) or None) 
-                          placeholder for the missing values
-    - impute_strategy: ()
-    
+    - X_train:         (pandas dataframe) dataframe with 1 - test_percentage of entries
+    - X_test:          (pandas dataframe) dataframe with test_percentage of entries
+    - colanmes:        (list of strings) contains names of columns whose missing values 
+                       will be imputated
+    - missing_val:     (number, string, np.nan (default) or None) 
+                       placeholder for the missing values
+    - impute_strategy: (string) imputation stragegy. Options: mean, median, 
+                       most_frequent, constant
+    - impute_val:      (string or numerical value) when impute_stragegy equals "constant"
+                       this values will be used to replace all ocurrances of missing_val
+
     Return 
-    - res: (pandas dataframe) dataframe with one hot enconding
+    - X_train_res:     (pandas dataframe) train dataframe with imputed values
+    - X_test_res:      (pandas dataframe) test dataframe with imputed values
     """
     X_train_res = X_train.copy()
     X_test_res = X_test.copy()
