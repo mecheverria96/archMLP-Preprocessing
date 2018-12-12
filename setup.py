@@ -1,7 +1,7 @@
 from setuptools import setup
 
 # Should match git tag
-VERSION = '0.0.1'
+VERSION = '0.1.1'
 
 def readme():
     with open('README.md') as f:
@@ -14,7 +14,7 @@ with open('requirements-dev.txt') as file:
     DEVELOPMENT_MODULES = [line.strip() for line in file]
 
 
-setup(name='data_preprocessing',
+setup(name='data_preprocessing_arch',
       version=VERSION,
       description='Python module for preprocessing data',
       long_description=readme(),
